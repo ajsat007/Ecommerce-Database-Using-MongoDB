@@ -1,0 +1,261 @@
+db.customer.insertMany([
+{
+_id: 1,
+customer_id: 1,
+customer_fname:'Jay',
+customer_lname:'Malkhede',
+customer_dob:2000,
+customer_address:'Ingole nagar',
+customer_city:'Nagpur',
+is_premium: 1,
+customer_contactno:9567546422,
+customer_email:'jaymalkhede@gmail.com'
+},
+{
+_id: 2,
+customer_id: 2,
+customer_fname:'Rakesh',
+customer_lname:'Bawane',
+customer_dob:1999,
+customer_address:'Kirnapur',
+customer_city:'Nagpur',
+is_premium: 0,
+customer_contactno:9552545652,
+customer_email:'rakeshbawane@gmail.com'
+},
+{
+_id: 3,
+customer_id: 3,
+customer_fname:'Rahul',
+customer_lname:'kawale',
+customer_dob:1998,
+customer_address:'Sai nagar 1',
+customer_city:'Nagpur',
+is_premium: 0,
+customer_contactno:8043403893,
+customer_email:'rahulkawale33@gmail.com'
+}
+]);
+
+db.cart.insertMany([
+{
+_id: 1,
+cart_item_qty: 1,
+product_id: 102,
+customer_id: 1,},
+{
+_id: 2,
+cart_item_qty: 1,
+product_id: 101,
+customer_id: 2,
+},
+{
+_id: 3,
+cart_item_qty: 1,
+product_id: 202,
+customer_id: 3
+}
+,
+{
+_id: 4,
+cart_item_qty: 1,
+product_id: 501,
+customer_id: 2
+}
+,
+{
+_id: 5,
+cart_item_qty: 1,
+product_id: 401,
+customer_id: 3
+}
+]);
+
+db.categories.insertMany([
+{
+_id:1,
+categroy_name: 'Home Applicances',
+},
+{
+_id:2,
+categroy_name: 'Computers, Laptop and Mobiles',
+sub_categories: ['Computers', 'Laptops', 'Mobiles']
+},
+{
+_id:3,
+categroy_name: 'Books',
+sub_categories: ['Fiction', 'Biography', 'Fantacy Fiction','Non Fiction']
+},
+{
+_id:4,
+categroy_name: 'Fasion',
+sub_categories: ['mens', 'womens']
+},
+{
+_id:5,
+categroy_name: 'Games and Consoles',
+sub_categories: ['titles', 'console']
+}
+]);
+
+db.products.insertMany([
+{
+_id:101,
+product_name: 'Laptop',
+product_model: 'C201',
+product_brand: 'HP',
+product_segments: ['Computers', 'Laptops'],
+product_cost: 100000,
+categroy_name: 'Computers, Laptop and Mobiles'},
+{
+_id:102,
+product_name: 'Smart Phone',
+product_model: 'C202',
+product_brand: 'Google',
+product_segments: ['Mobile', 'Android'],
+product_cost: 60000,
+categroy_name: 'Computers, Laptop and Mobiles'
+},
+{
+_id:103,
+product_name: 'Lord of the Rings',
+product_model: 'C501',
+product_segments: ['Book', 'Novels'],
+product_cost: 1500,
+categroy_name: 'Books'
+},
+{
+_id:104,
+product_name: 'Pokemon Scarlet',
+product_model: 'C701',
+product_segments: ['pokemon', 'gen9'],
+product_cost: 4500,
+categroy_name: 'Games and Consoles'
+},
+{
+_id:105,
+product_name: 'Nintendo Switch',
+product_model: 'C702',
+product_segments: ['console'],
+product_cost: 30000,
+categroy_name: 'Games and Consoles'
+},
+]);
+
+db.orders.insertMany([
+{
+_id: 1,
+product_name: 'Nintendo Switch',
+customer_id: 1,
+order_qty: 1,
+order_status: 'Delivered',
+order_date: new Date('2022-11-15')
+},
+{
+_id: 2,
+product_name: 'Pokemon Scarlet',
+customer_id: 2,
+order_qty: 2,
+order_status: 'Dispatched',
+order_date: new Date('2022-11-27')
+},
+{
+_id: 3,
+product_name: 'Lord of the Rings',
+customer_id: 3,
+order_qty: 1,
+order_status: 'Delivered',
+order_date: new Date('2022-11-10')
+},
+{
+_id: 4,
+product_name: 'Smart Phone',
+customer_id: 1,
+order_qty: 1,
+order_status: 'cancelled',
+order_date: new Date('2022-11-18')
+},
+{
+_id: 5,
+product_name: 'Laptop',
+customer_id: 1,
+order_qty: 1,
+order_status: 'Dispatched',
+order_date: new Date('2022-11-01')
+}
+]);
+
+db.seller.insertMany([
+{
+_id: 1,
+seller_name: 'Jethalal Gada',
+seller_business: 'Gada Electronics',
+seller_mobileno: 4567891230,
+seller_address: 'Andheri',
+seller_city: 'Mumbai'
+},
+{
+_id: 2,
+seller_name: 'Ankur Kumar',
+seller_business: 'ABC Sports and Fasion',
+seller_mobileno: 7890123456,
+seller_address: 'Connaught Place',
+seller_city: 'Delhi'
+}
+]);
+
+db.catlog.insertMany([
+{
+seller_name: 'Guudu Ansari',
+product_name: 'Smart Phone',
+product_qty: 10,
+},
+{
+seller_name: 'Akshay Ghode',
+product_name: 'Laptop',
+product_qty: 5,
+},
+{
+seller_name: 'Amol Vaidya',
+product_name: 'Pokemon Scarlet',
+product_qty: 20,
+},
+{
+seller_name: 'Amol Vaidya',
+product_name: 'Nintendo Switch',
+product_qty: 15,
+}
+]);
+
+ 
+
+
+QUESTIONS:
+A1.
+db.products.aggregate([{$group:{_id:'product_cost', avg:{$avg:'$product_cost'}}}]);
+
+A2.
+db.orders.aggregate({ $group : { _id: "$customer_id", max_values: { $max : "$product_cost" }}});
+
+A3.
+db.orders.aggregate([{$group:{_id:"$order_month","Orders":{$sum:"$order_value"}}}]);
+
+A4.
+db.customer.aggregate([{"$group":{_id:"$customer_city","count":{"$sum":1},"customer_name":{"$push":"customer_name"}}}, {"$project":{"size":1,"cust_count {"$size":"$customer_name"},}}]);
+
+A5.
+
+db.getCollection('seller').aggregate([{$lookup:{from:'customer',localField:'sel_city',foreignField:'cust_city',as:'customerdetails'
+}
+},
+{
+"$sort":{
+"products_sold":-1
+}},
+{ $match : { "customerdetails" : { $ne : []}}},
+]);
+
+ 
+
+ 
+
